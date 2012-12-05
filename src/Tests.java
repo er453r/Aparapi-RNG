@@ -10,11 +10,11 @@ import com.er453r.aparapi.rng.XORShiftKernel;
 
 public class Tests {
 	public static void main(String[] _args){
-		MersenneTwisterTest(0xfffff, 1, EXECUTION_MODE.GPU);
-		MersenneTwisterTest(0xfffff, 1, EXECUTION_MODE.JTP);
+		MersenneTwisterTest(0xfffff, 2, EXECUTION_MODE.GPU);
+		MersenneTwisterTest(0xfffff, 2, EXECUTION_MODE.JTP);
 		
-		//XORShiftTest(0xfffff, 16, EXECUTION_MODE.GPU);
-		//XORShiftTest(0xfffff, 16, EXECUTION_MODE.JTP);
+		XORShiftTest(0xfffff, 16, EXECUTION_MODE.GPU);
+		XORShiftTest(0xfffff, 16, EXECUTION_MODE.JTP);
 	}
 	
 	public static void XORShiftTest(final int testSize, final int thread, EXECUTION_MODE mode){

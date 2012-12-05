@@ -50,10 +50,11 @@ public abstract class MersenneTwisterKernel extends PRNGKernel{
 		mt = new int[maxThreads * N];
 		mtIndex = new int[maxThreads];
 		
-		if(seeds != null && SEED_SIZE * maxThreads != seeds.length)
-			throw new IllegalArgumentException(String.format("Wrong size of seeds for threads! Expected %d, got %d, for %d threads.", SEED_SIZE * maxThreads, seeds.length, maxThreads));
-		else if(seeds == null)
+		if(seeds == null)
 			seeds = BinaryUtils.convertBytesToInts( DefaultSeedGenerator.getInstance().generateSeed(SEED_SIZE * maxThreads * INTEGER_SIZE) );
+		
+		if(SEED_SIZE * maxThreads != seeds.length)
+			throw new IllegalArgumentException(String.format("Wrong size of seeds for threads! Expected %d, got %d, for %d threads.", SEED_SIZE * maxThreads, seeds.length, maxThreads));
 		
 		for(int n = 0; n < maxThreads; n++){
 			int[] localSeeds = new int[SEED_SIZE];
@@ -61,7 +62,7 @@ public abstract class MersenneTwisterKernel extends PRNGKernel{
 			for(int l = 0; l < SEED_SIZE; l++)
 				localSeeds[l] = seeds[n * SEED_SIZE + l];
 			
-			initSeeds(seeds, n);
+			initSeeds(localSeeds, n);
 		}
 	}
 	

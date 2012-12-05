@@ -35,10 +35,11 @@ public abstract class XORShiftKernel extends PRNGKernel{
 		
 		states = new int[SEED_SIZE * maxThreads];
 		
-		if(seeds != null && states.length != seeds.length)
-			throw new IllegalArgumentException(String.format("Wrong size of seeds for threads! Expected %d, got %d, for %d threads.", states.length, seeds.length, maxThreads));
-		else if(seeds == null)
-			seeds = BinaryUtils.convertBytesToInts( DefaultSeedGenerator.getInstance().generateSeed(states.length * INTEGER_SIZE) );
+		if(seeds == null)
+			seeds = BinaryUtils.convertBytesToInts( DefaultSeedGenerator.getInstance().generateSeed(SEED_SIZE * maxThreads * INTEGER_SIZE) );
+		
+		if(SEED_SIZE * maxThreads != seeds.length)
+			throw new IllegalArgumentException(String.format("Wrong size of seeds for threads! Expected %d, got %d, for %d threads.", SEED_SIZE * maxThreads, seeds.length, maxThreads));
 			
 		for(int n = 0; n < states.length; n++)
 			states[n] = seeds[n];
