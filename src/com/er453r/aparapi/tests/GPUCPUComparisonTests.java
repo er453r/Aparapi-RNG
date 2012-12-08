@@ -1,3 +1,4 @@
+package com.er453r.aparapi.tests;
 import org.uncommons.maths.binary.BinaryUtils;
 import org.uncommons.maths.random.DefaultSeedGenerator;
 import org.uncommons.maths.random.MersenneTwisterRNG;
@@ -8,7 +9,7 @@ import com.amd.aparapi.Kernel.EXECUTION_MODE;
 import com.er453r.aparapi.rng.MersenneTwisterKernel;
 import com.er453r.aparapi.rng.XORShiftKernel;
 
-public class Tests {
+public class GPUCPUComparisonTests {
 	public static void main(String[] _args){
 		MersenneTwisterTest(256, 128, EXECUTION_MODE.GPU);
 		MersenneTwisterTest(256, 128, EXECUTION_MODE.JTP);
