@@ -68,31 +68,33 @@ public abstract class MersenneTwisterKernel extends PRNGKernel{
 	
 	private void initSeeds(int[] seedInts, int threadIndex){
 		int indexOffset = threadIndex;
-		int stateOffset = indexOffset * 4;
+		int stateOffset = indexOffset * N;
 		
 		mt[stateOffset + 0] = BOOTSTRAP_SEED;
 		
-        for (mtIndex[indexOffset + 0] = 1; mtIndex[indexOffset + 0] < N; mtIndex[indexOffset + 0]++)
+        for(mtIndex[indexOffset + 0] = 1; mtIndex[indexOffset + 0] < N; mtIndex[indexOffset + 0]++)
             mt[stateOffset + mtIndex[indexOffset + 0]] = (BOOTSTRAP_FACTOR * (mt[stateOffset + mtIndex[indexOffset + 0] - 1] ^ (mt[stateOffset + mtIndex[indexOffset + 0] - 1] >>> 30)) + mtIndex[indexOffset + 0]);
 
-        // This section is translated from the init_by_array code in the C version.
-        int i = 1;
-        int j = 0;
-        for (int k = Math.max(N, seedInts.length); k > 0; k--){
+        int i = 1, j = 0;
+
+        for(int k = Math.max(N, seedInts.length); k > 0; k--){
             mt[stateOffset + i] = (mt[stateOffset + i] ^ ((mt[stateOffset + i - 1] ^ (mt[stateOffset + i - 1] >>> 30)) * SEED_FACTOR1)) + seedInts[j] + j;
+            
             i++;
             j++;
-            if (i >= N){
+            
+            if(i >= N){
                 mt[stateOffset + 0] = mt[stateOffset + N - 1];
                 i = 1;
             }
             
-            if (j >= seedInts.length)
+            if(j >= seedInts.length)
                 j = 0;
         }
         
         for(int k = N - 1; k > 0; k--){
             mt[stateOffset + i] = (mt[stateOffset + i] ^ ((mt[stateOffset + i - 1] ^ (mt[stateOffset + i - 1] >>> 30)) * SEED_FACTOR2)) - i;
+            
             i++;
             
             if(i >= N){
@@ -114,7 +116,7 @@ public abstract class MersenneTwisterKernel extends PRNGKernel{
 	
 	public int random(){
 		int indexOffset = getGlobalId();
-		int stateOffset = indexOffset * 4;
+		int stateOffset = indexOffset * N;
 		
 		int y;
 
@@ -133,7 +135,6 @@ public abstract class MersenneTwisterKernel extends PRNGKernel{
             
             y = (mt[stateOffset + N - 1] & UPPER_MASK) | (mt[stateOffset + 0] & LOWER_MASK);
             mt[stateOffset + N - 1] = mt[stateOffset + M - 1] ^ (y >>> 1) ^ MAG01[y & 0x1];
-
             mtIndex[indexOffset + 0] = 0;
         }
 
