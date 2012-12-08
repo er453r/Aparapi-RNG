@@ -66,6 +66,12 @@ public abstract class MersenneTwisterKernel extends PRNGKernel{
 		}
 	}
 	
+	/**
+	 * Initializes states for all threads from seeds
+	 * 
+	 * @param seedInts seeds to use
+	 * @param threadIndex thread index to initialize
+	 */
 	private void initSeeds(int[] seedInts, int threadIndex){
 		int indexOffset = threadIndex;
 		int stateOffset = indexOffset * N;
@@ -106,14 +112,16 @@ public abstract class MersenneTwisterKernel extends PRNGKernel{
         mt[stateOffset + 0] = UPPER_MASK; // Most significant bit is 1 - guarantees non-zero initial array.
 	}
 	
+	/**
+	 * Shortcut to MersenneTwisterKernel(Range maximumRange, int[] seeds)
+	 * 
+	 * @param maximumRange maximum range size
+	 */
 	public MersenneTwisterKernel(int maximumRange){
 		this(Range.create(maximumRange), null);
 	}
 	
-	public MersenneTwisterKernel(int maximumRange, int[] seeds){
-		this(Range.create(maximumRange), seeds);
-	}
-	
+	/** Implements PRNGKernel method */
 	public int random(){
 		int indexOffset = getGlobalId();
 		int stateOffset = indexOffset * N;

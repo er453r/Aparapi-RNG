@@ -54,6 +54,7 @@ public abstract class XORShiftKernel extends PRNGKernel{
 		this(Range.create(maximumRange), null);
 	}
 	
+	/** Implements PRNGKernel method */
 	public int random(){
 		int offset = SEED_SIZE * getGlobalId();
 		
