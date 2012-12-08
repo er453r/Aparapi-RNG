@@ -15,6 +15,9 @@ public class Tests {
 		
 		XORShiftTest(256, 128, EXECUTION_MODE.GPU);
 		XORShiftTest(256, 128, EXECUTION_MODE.JTP);
+		
+		resultsTest(16, EXECUTION_MODE.GPU);
+		resultsTest(16, EXECUTION_MODE.JTP);
 	}
 	
 	public static void XORShiftTest(final int testSize, final int thread, EXECUTION_MODE mode){
@@ -107,5 +110,28 @@ public class Tests {
 		}
 				
 		System.out.printf("%d samples, results OK\n", testSize);
+	}
+	
+	public static void resultsTest(final int testSize, EXECUTION_MODE mode){
+		final float out[] = new float[testSize];
+						
+		XORShiftKernel kernel = new XORShiftKernel(testSize){
+			@Override public void run(){				
+				int gid = getGlobalId();
+
+				out[gid] = randomGaussian();
+			}
+		};
+		
+		kernel.setExecutionMode(mode);
+		
+		kernel.execute(testSize);
+		
+		System.out.printf("\nExecution mode = %s, time = %d ms.\n", kernel.getExecutionMode(), kernel.getExecutionTime());
+		
+		kernel.dispose();
+		
+		for(int n = 0; n < out.length; n++)
+			System.out.printf("%f ", out[n]);
 	}
 }

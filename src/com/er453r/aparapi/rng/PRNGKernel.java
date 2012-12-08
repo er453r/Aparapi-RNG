@@ -61,17 +61,17 @@ public abstract class PRNGKernel extends Kernel{
 	 * @return the next pseudorandom, Gaussian ("normally") distributed double value with mean 0.0 and standard deviation 1.0 from this random number generator's sequence.
 	 */
 	public float randomGaussian(){
-		float v1, v2, s;
+		float v1 = 1, v2, s = 1;
+		boolean found = false;
 		
-		do{ 
+		while(!found){ 
 			v1 = randomn11();
 			v2 = randomn11();
 			s = v1 * v1 + v2 * v2;
+			
+			found = s < 1 && s > 0;
 		}
-		while(s >= 1 || s == 0);
-		
-		float multiplier = sqrt(-2 * log(s) / s);
 
-		return v1 * multiplier;
+		return v1 * sqrt(-2 * log(s) / s);
 	 }
 }
