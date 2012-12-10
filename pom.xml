@@ -3,7 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>Aparapi-Test</groupId>
 	<artifactId>Aparapi-Test</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
+	<name>Aparapi RNG</name>
+	<url>https://github.com/er453r/Aparapi-RNG</url>
+	<description>Aparapi - (Pseudo) Random Number Generating Kernels</description>
+	
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
