@@ -12,6 +12,8 @@ import com.amd.aparapi.Range;
  * It has a period of about 2^160, which although much shorter than the Mersenne Twister's, is still significantly longer than that of java.util.Random. 
  * This is the RNG to use when performance is the primary concern. It can be up to twice as fast as the Mersenne Twister.
  * 
+ * Requires 20 (5 * 4)  bytes of memory per thread
+ * 
  * @author Marcin Kotz
  */
 public abstract class XORShiftKernel extends PRNGKernel{

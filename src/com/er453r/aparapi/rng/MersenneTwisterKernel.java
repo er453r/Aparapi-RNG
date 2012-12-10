@@ -12,6 +12,8 @@ import com.amd.aparapi.Range;
  * It is faster than java.util.Random, does not have the same statistical flaws as that RNG and also has a long period (219937). 
  * The Mersenne Twister is an excellent general purpose RNG.
  * 
+ * Requires 627 (624 + 1 + 2) bytes of memory per thread (a lot)
+ * 
  * @author Marcin Kotz
  */
 public abstract class MersenneTwisterKernel extends PRNGKernel{
